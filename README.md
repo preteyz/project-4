@@ -12,8 +12,10 @@ User Story (as a user I want to):
 4. Write reviews and ratings so that other users can see if the location is worth visiting
 
 ERD includes: Users, Travel Location, and Reviews
-<img width="709" alt="image" src="https://user-images.githubusercontent.com/53968876/160979325-c50b6d62-ccd5-4dee-92f9-234ed7db87e0.png">
+<img width="548" alt="image" src="https://user-images.githubusercontent.com/53968876/161395600-743241e9-8033-481f-9735-4bab143c7608.png">
+
 User Flow:
+<img width="1108" alt="image" src="https://user-images.githubusercontent.com/53968876/161395463-0c5c64aa-96a0-4a1b-bc0e-ffd1b9241731.png">
 
 
 Wireframes
