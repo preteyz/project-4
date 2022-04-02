@@ -10,9 +10,12 @@ User Story (as a user I want to):
 2. Search bar to filter out locations by name or environment type
 3. Able see who favorited each location and number of people to favorited
 4. Write reviews and ratings so that other users can see if the location is worth visiting
+5. Add travel location and ability to edit my own posting
+6. Edit Profile bio
+
 
 ERD includes: Users, Travel Location, and Reviews
-<img width="548" alt="image" src="https://user-images.githubusercontent.com/53968876/161395600-743241e9-8033-481f-9735-4bab143c7608.png">
+<img width="546" alt="image" src="https://user-images.githubusercontent.com/53968876/161396029-14a79ce9-3174-459a-bb6f-ef0b88d3a93a.png">
 
 User Flow:
 <img width="1108" alt="image" src="https://user-images.githubusercontent.com/53968876/161395463-0c5c64aa-96a0-4a1b-bc0e-ffd1b9241731.png">
