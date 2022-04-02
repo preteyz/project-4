@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Browse
+{% endblock %}
+
+{% block content %}
+
+<form>
+    <div>
+        <input type="text" name="name" placeholder="name"/>
+        <input type="submit" value="Search"/>
+    </div>
+    <!-- this a tag will redirect back to catlist without a query param! be sure to use the "name" you called the route in your main_app/urls.py -->
+    <a href="{% url 'browse' %}">Clear Search</a>
+</form>
+
+<h1>{{header}}</h1>
+    {% for location in TravelLocations %}
+    <img src="{{location.img}}" alt="{{location.name}}">
+        {% comment %} <a href="{% url 'location_detail' location.pk %}"> {% endcomment %}
+            <h3>Name: {{location.name}}</h3>
+        </a>
+            <a href="/user/{{ location.createdby.username }}">{{ location.createdby.username }}</a>
+        </p>
+    {% endfor %}
+{% endblock %}
