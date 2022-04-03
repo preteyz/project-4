@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% comment %} <div>
+    <img src="{{object.img}}" alt="picture of {{object.name}}"/>
+</div> {% endcomment %}
+<div>
+    <h3>Name: {{ object.name }}</h3>
+    <p>Adopted by:
+        <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
+    </p> 
+{% comment %} 
+    <h3>Toys owned:</h3>
+    {% for cattoy in object.cattoys.all %}
+        <div>{{ cattoy.name }}</div>
+    {% empty %}
+        <div> Cat has no toys 🙁</div>
+    {% endfor %} {% endcomment %}
+</div>
+
+<div>
+    <a href="{% url 'location_update' object.pk %}">Update</a>
+    <a href="{% url 'location_delete' object.pk %}">Delete</a>
+</div>
+
+{% endblock %}

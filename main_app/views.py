@@ -25,3 +25,28 @@ class Browse(TemplateView):
             context['header'] = "Our Travel Locations!"
         return context
 
+class Location_Detail(DetailView):
+    model = TravelLocation
+    template_name = "location_detail.html"
+
+class Location_Create(CreateView):
+    model = TravelLocation
+    fields = ['name', 'img', 'environment', 'createdby']
+    template_name = "location_create.html"
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.createdby = self.request.user
+        self.object.save()
+        return HttpResponseRedirect('/browse')
+
+class Location_Update(UpdateView):
+    model = TravelLocation
+    fields = ['name', 'img', 'environment', 'createdby']
+    template_name = "location_update.html"
+    def get_success_url(self):
+        return reverse('location_detail', kwargs={'pk': self.object.pk})
+
+class Location_Delete(DeleteView):
+    model = TravelLocation
+    template_name = "location_delete_confirmation.html"
+    success_url = "/browse/"
