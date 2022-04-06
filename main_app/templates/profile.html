@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h1>{{ username }}'s Collection</h1>
+
+    {% for location in locations %}
+        <a href="/travel_locations/{{ location.id }}">
+            <h3>{{ location.name }}</h3>
+        </a>
+
+    {% endfor %}
+
+{% endblock %}
