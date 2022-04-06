@@ -15,8 +15,14 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('signup/', views.signup_view, name='signup'),
+    
     # Profile
     path('user/<username>/', views.profile, name='profile'),
+
+    # Review CRUD
+    path('reviews/create/', views.Review_Create.as_view(), name='review_create'),
+    path('reviews/<int:pk>/update/', views.Review_Update.as_view(), name='review_update'),
+    path('reviews/<int:pk>/delete/', views.Review_Delete.as_view(), name='review_delete'),
 
 
 ]
