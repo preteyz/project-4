@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-from main_app.models import TravelLocation, User
+from main_app.models import TravelLocation, User, Review
 
 # Create your views here.
 class Home(TemplateView):
@@ -107,3 +107,22 @@ def login_view(request):
         # form = LoginForm()
         form = AuthenticationForm()
         return render(request, 'login.html', {'form': form})
+
+
+def reviews_index(request):
+    reviews = Review.objects.all()
+    return render(request, 'review_index.html', {'reviews': reviews })
+
+@method_decorator(login_required, name='dispatch')
+class Review_Create(CreateView):
+    model = Review
+    fields = '__all__'
+    template_name = "review_form.html"
+    success_url = '/reviews'
+
+@method_decorator(login_required, name='dispatch')
+class Review_Update(UpdateView):
+    model = Review
+    fields = ['name', 'color']
+    template_name = "review_update.html"
+    success_url = '/reviews'

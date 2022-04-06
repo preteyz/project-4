@@ -20,6 +20,7 @@ urlpatterns = [
     path('user/<username>/', views.profile, name='profile'),
 
     # Review CRUD
+    path('reviews/', views.reviews_index, name='reviews_index'),
     path('reviews/create/', views.Review_Create.as_view(), name='review_create'),
     path('reviews/<int:pk>/update/', views.Review_Update.as_view(), name='review_update'),
     path('reviews/<int:pk>/delete/', views.Review_Delete.as_view(), name='review_delete'),
