@@ -11,6 +11,9 @@ urlpatterns = [
     path('travel_locations/<int:pk>/update', views.Location_Update.as_view(), name="location_update"),
     path('travel_locations/<int:pk>/delete', views.Location_Delete.as_view(), name="location_delete"),
 
+
+    path('travel_locations/<int:pk>/create_review/', views.Review_Create.as_view(), name = "review_create"),
+
     # Auth
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),

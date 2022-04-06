@@ -11,6 +11,7 @@ Browse
         <input type="text" name="name" placeholder="name"/>
         <input type="submit" value="Search"/>
     </div>
+    <a href="{% url 'location_create' %}">Add Location</a>
     <a href="{% url 'travel_locations' %}">Clear Search</a>
 </form>
 
@@ -20,7 +21,7 @@ Browse
         <a href="{% url 'location_detail' location.pk %}">
             <h3>Name: {{location.name}}</h3>
         </a>
-            <a href="/user/{{ location.createdby.username }}">{{ location.createdby.username }}</a>
+            <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a>
         </p>
     {% endfor %}
 {% endblock %}

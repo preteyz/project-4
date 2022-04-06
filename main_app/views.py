@@ -32,22 +32,23 @@ class Travel_Locations(TemplateView):
 class Location_Detail(DetailView):
     model = TravelLocation
     template_name = "location_detail.html"
+    
 
 @method_decorator(login_required, name='dispatch')
 class Location_Create(CreateView):
     model = TravelLocation
-    fields = ['name', 'img', 'environment', 'createdby']
+    fields = ['user', 'name', 'img', 'environment']
     template_name = "location_create.html"
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.createdby = self.request.user
+        self.object.user = self.request.user
         self.object.save()
         return HttpResponseRedirect('/travel_locations')
 
 @method_decorator(login_required, name='dispatch')
 class Location_Update(UpdateView):
     model = TravelLocation
-    fields = ['name', 'img', 'environment', 'createdby']
+    fields = ['user', 'name', 'img', 'environment']
     template_name = "location_update.html"
     def get_success_url(self):
         return reverse('location_detail', kwargs={'pk': self.object.pk})
@@ -111,18 +112,24 @@ def login_view(request):
 
 def reviews_index(request):
     reviews = Review.objects.all()
-    return render(request, 'review_index.html', {'reviews': reviews })
+    return render(request, 'reviews_index.html', {'reviews': reviews })
 
 @method_decorator(login_required, name='dispatch')
 class Review_Create(CreateView):
     model = Review
     fields = '__all__'
-    template_name = "review_form.html"
+    template_name = "reviews_form.html"
     success_url = '/reviews'
 
 @method_decorator(login_required, name='dispatch')
 class Review_Update(UpdateView):
     model = Review
     fields = ['name', 'color']
-    template_name = "review_update.html"
+    template_name = "reviews_update.html"
+    success_url = '/reviews'
+
+@method_decorator(login_required, name='dispatch')
+class Review_Delete(DeleteView):
+    model = Review
+    template_name = "reviews_confirm_delete.html"
     success_url = '/reviews'

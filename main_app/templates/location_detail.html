@@ -6,16 +6,19 @@
 </div> {% endcomment %}
 <div>
     <h3>Name: {{ object.name }}</h3>
-    <p>Adopted by:
+    <p>Created by:
         <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
     </p> 
-{% comment %} 
-    <h3>Toys owned:</h3>
-    {% for cattoy in object.cattoys.all %}
-        <div>{{ cattoy.name }}</div>
+ 
+    <h3>Reviews:</h3>
+    {% for review in object.reviews.all %}
+        <div>{{ review.user }}</div>
+        <div>{{ review.created_at }}</div>
+        <div>{{ review.name }}</div>
+        <div>{{ review.body }}</div>
     {% empty %}
-        <div> Cat has no toys 🙁</div>
-    {% endfor %} {% endcomment %}
+        <div> This location has no reviews...</div>
+    {% endfor %}
 </div>
 
 <div>
