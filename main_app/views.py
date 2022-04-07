@@ -41,6 +41,7 @@ class Location_Detail(DetailView):
         context = super().get_context_data(**kwargs)
         context['locations'] = TravelLocation.objects.all()
         context['reviews'] = Review.objects.all()
+        # context['reviews'] = Review.objects.filter(location__icontains=name)
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -92,7 +93,7 @@ def signup_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/cats')
+    return HttpResponseRedirect('/')
 
 def login_view(request):
      # if post, then authenticate (user submitted username and password)

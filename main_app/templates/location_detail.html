@@ -24,11 +24,9 @@
         <div>{{ review.created_at }}</div>
         <div>{{ review.name }}</div>
         <div>{{ review.body }}</div>
-        {% else %}
-            <div> This location has no reviews... {{object.id}}</div>
         {% endif %}
         
-    {% empty %}
+        {% empty %}
         <div> This location has no reviews...</div>
     {% endfor %}
 
