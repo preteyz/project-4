@@ -50,8 +50,10 @@ class Location_Detail(DetailView):
         if location.favorites.filter(id=self.request.user.id).exists():
             faved = True
 
+        total_favs = location.total_likes()
         context['location'] = location
         context['faved'] = faved
+        context['total_favs'] = total_favs
         context['reviews'] = Review.objects.all()
 
         # context['reviews'] = Review.objects.filter(location__icontains=name)
