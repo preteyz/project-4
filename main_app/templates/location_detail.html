@@ -9,16 +9,29 @@
     <p>Created by:
         <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
     </p> 
- 
+
+    <br/><br/>
+    <form action="{% url 'favorite_location' object.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Favorite</button>
+    </form>
+    <br/>
+
     <h3>Reviews:</h3>
-    {% for review in object.reviews.all %}
-        <div>{{ review.user }}</div>
+    {% for review in reviews.all %}
+        {% if review.travel_location.id == object.id %}
+        <div>{{ review.user.username }}</div>
         <div>{{ review.created_at }}</div>
         <div>{{ review.name }}</div>
         <div>{{ review.body }}</div>
+        {% else %}
+            <div> This location has no reviews... {{object.id}}</div>
+        {% endif %}
+        
     {% empty %}
         <div> This location has no reviews...</div>
     {% endfor %}
+
 </div>
 
 <div>

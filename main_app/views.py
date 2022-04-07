@@ -1,5 +1,5 @@
 from nis import cat
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
@@ -9,8 +9,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-
+from django.urls import reverse
 from main_app.models import TravelLocation, User, Review
+
+def Favorite_View(request, pk):
+    location = get_object_or_404(TravelLocation, id=request.POST.get('location_id'))
+    location.favorites.add(request.user)
+    return HttpResponseRedirect(reverse('location_detail', args=[str(pk)]))
 
 # Create your views here.
 class Home(TemplateView):
@@ -32,12 +37,16 @@ class Travel_Locations(TemplateView):
 class Location_Detail(DetailView):
     model = TravelLocation
     template_name = "location_detail.html"
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['locations'] = TravelLocation.objects.all()
+        context['reviews'] = Review.objects.all()
+        return context
 
 @method_decorator(login_required, name='dispatch')
 class Location_Create(CreateView):
     model = TravelLocation
-    fields = ['user', 'name', 'img', 'environment']
+    fields = ['user', 'name', 'img', 'environment', 'favorites']
     template_name = "location_create.html"
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -124,7 +133,7 @@ class Review_Create(CreateView):
 @method_decorator(login_required, name='dispatch')
 class Review_Update(UpdateView):
     model = Review
-    fields = ['name', 'color']
+    fields = ['rating', 'body']
     template_name = "reviews_update.html"
     success_url = '/reviews'
 

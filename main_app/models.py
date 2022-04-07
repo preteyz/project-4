@@ -12,13 +12,14 @@ ENVIRONMENT_CHOICES = (
     ("r", "rural")
 )
 
-# favorites = models.ManyToManyField(Review)
+
 class TravelLocation(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     img = models.CharField(max_length=250)
     environment = models.CharField(max_length=10, choices = ENVIRONMENT_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
+    favorites = models.ManyToManyField(User, related_name='location_post')
     
     def __str__(self):
         return self.name
@@ -33,8 +34,6 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     travel_location= models.ForeignKey(TravelLocation, blank=True, on_delete=models.CASCADE) #move this to TravelLocations
     
-    def __str__(self):
-        return self.name
     
 
 
