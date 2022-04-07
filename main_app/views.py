@@ -14,7 +14,13 @@ from main_app.models import TravelLocation, User, Review
 
 def Favorite_View(request, pk):
     location = get_object_or_404(TravelLocation, id=request.POST.get('location_id'))
-    location.favorites.add(request.user)
+    favorited = False
+    if location.favorites.filter(id=request.user.id).exists():
+        location.favorites.remove(request.user)
+        favorited = False
+    else:
+        location.favorites.add(request.user)
+        favorited = True
     return HttpResponseRedirect(reverse('location_detail', args=[str(pk)]))
 
 # Create your views here.
@@ -39,8 +45,15 @@ class Location_Detail(DetailView):
     template_name = "location_detail.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['locations'] = TravelLocation.objects.all()
+        location = get_object_or_404(TravelLocation, id=self.kwargs['pk'])
+        faved = False
+        if location.favorites.filter(id=self.request.user.id).exists():
+            faved = True
+
+        context['location'] = location
+        context['faved'] = faved
         context['reviews'] = Review.objects.all()
+
         # context['reviews'] = Review.objects.filter(location__icontains=name)
         return context
 

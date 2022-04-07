@@ -13,7 +13,14 @@
     <br/><br/>
     <form action="{% url 'favorite_location' object.pk %}" method="POST">
         {% csrf_token %}
-        <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Favorite</button>
+        
+        
+        {% if faved %}
+            <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-danger btn-sm">Unfav</button>
+        {% else %}
+        <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Fav</button>
+        {% endif %}
+
     </form>
     <br/>
 
