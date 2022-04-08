@@ -21,7 +21,7 @@ class TravelLocation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     favorites = models.ManyToManyField(User, related_name='location_post')
     
-    def total_favs(self):
+    def total_faves(self):
         return self.favorites.count()
 
     def __str__(self):
