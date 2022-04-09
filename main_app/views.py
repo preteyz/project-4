@@ -50,10 +50,11 @@ class Location_Detail(DetailView):
         if location.favorites.filter(id=self.request.user.id).exists():
             faved = True
 
-        total_favs = location.total_likes()
+        total_faves = location.total_faves()
         context['location'] = location
         context['faved'] = faved
-        context['total_favs'] = total_favs
+        context['total_faves'] = total_faves
+        context['favorites'] = location.favorites
         context['reviews'] = Review.objects.all()
 
         # context['reviews'] = Review.objects.filter(location__icontains=name)
@@ -62,7 +63,7 @@ class Location_Detail(DetailView):
 @method_decorator(login_required, name='dispatch')
 class Location_Create(CreateView):
     model = TravelLocation
-    fields = ['user', 'name', 'img', 'environment', 'favorites']
+    fields = ['name', 'img', 'environment']
     template_name = "location_create.html"
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -142,7 +143,7 @@ def reviews_index(request):
 @method_decorator(login_required, name='dispatch')
 class Review_Create(CreateView):
     model = Review
-    fields = '__all__'
+    fields = ['rating', 'body']
     template_name = "reviews_form.html"
     success_url = '/reviews'
 

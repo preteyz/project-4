@@ -40,30 +40,7 @@
                                Travel Locations
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                               href="#"
-                               id="navbarDropdown"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </li>
-                            </ul>
-                        </li>
+
 
                         <li class="nav-item">
                             <form class="d-flex">
@@ -76,7 +53,7 @@
                         </li>
 
 
-                        <li class="nav-item">
+                        <li class="nav-item col-1">
                             <a href="{% url 'logout' %}"
                                class="nav-link">
                                Logout
@@ -127,10 +104,14 @@
         <a href="/travel_locations">Travel Locations |</a>
 
         </nav> {% endcomment %}
-        <div id="content" name="content" class="main">
-            <div class="row justify-content-center">
-                <div class="col-8">
-                    {% block content %}{% endblock %}
+        <div class="container"> 
+            <div id="content" name="content" class="main">
+            
+                <div class="row justify-content-center">
+                
+                    <div class="col-9 "style="border:2px solid">
+                        {% block content %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
