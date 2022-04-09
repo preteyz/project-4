@@ -24,7 +24,7 @@
             {% if faved %}
                 <button type="submit", name="location_id", value="{{ location.id }}", class="btn btn-danger btn-sm">Unfav</button> - {{total_faves}} 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Favorites
                 </button>
                 
@@ -72,7 +72,6 @@
     {% endfor %}
     <a href="{% url 'review_create' location.pk %}">Add review</a>
 </div>
-
 
 
 {% endblock %}

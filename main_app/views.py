@@ -146,6 +146,22 @@ class Review_Create(CreateView):
     fields = ['rating', 'body']
     template_name = "reviews_form.html"
     success_url = '/reviews'
+    def form_valid(self, form):
+        print("HELLO")
+        print(self.request)
+        # self.object = form.save(commit=False)
+        # self.object.location = self.request
+        # self.object.save()
+        return HttpResponseRedirect('/')
+        # return HttpResponseRedirect(reverse('location_detail', args=[str(pk)]))
+
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     self.object.user = self.request.user
+    #     self.object.save()
+    #     return HttpResponseRedirect('/travel_locations')
+
+
 
 @method_decorator(login_required, name='dispatch')
 class Review_Update(UpdateView):
