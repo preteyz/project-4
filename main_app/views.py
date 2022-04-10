@@ -83,7 +83,7 @@ def signup_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/cats')
+    return HttpResponseRedirect('/')
 
 def login_view(request):
      # if post, then authenticate (user submitted username and password)

@@ -74,7 +74,7 @@
                         </li>
 
                         {% else %}
-                        <li class="nav-item">
+                        <li class="nav-item" style="margin-left: 980px">
                             <a href="{% url 'login' %}"
                                class="nav-link" >
                                Login
@@ -95,26 +95,7 @@
                 </div>
             </div>
         </nav>
-        {% comment %} <nav class="navbar">
-        {% if user.is_authenticated %}
-        <span><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></span>
-        <span>|</span>
-        <span><a href="{% url 'logout' %}">Logout</a></span>
-        <span>|</span>
-        {% else %}
-        <span><a href="{% url 'login' %}">Login</a></span>
-        <span>|</span>
-        <span><a href="{% url 'signup' %}">SignUp</a></span>
-        {% endif %}
-        <a href="/admin">Admin</a>
-        <span>|</span>
-        <a href="/">Home</a>
-        <span>|</span>
-        <a href="/about">About</a>
-        <span>|</span>
-        <a href="/travel_locations">Travel Locations |</a>
 
-        </nav> {% endcomment %}
         <div class="container"> 
             <div id="content" name="content" class="main">
             
