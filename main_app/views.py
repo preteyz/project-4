@@ -32,10 +32,10 @@ class Travel_Locations(TemplateView):
             context["environments"] =TravelLocation.objects.values_list('environment', flat=True).distinct()
         else: 
             context['header'] = "Our travel locations"
-            context["locations"] = TravelLocation.objects.filter(environment__icontains=environment)
+            context["locations"] =TravelLocation.objects.all()
             context["environments"] =TravelLocation.objects.values_list('environment', flat=True).distinct()
         if environment != None:
-            context["files"] = TravelLocation.objects.filter(environment__icontains=environment)
+            context["locations"] = TravelLocation.objects.filter(environment__icontains=environment)
         return context
         
 
@@ -135,7 +135,7 @@ class Review_Create(CreateView):
     success_url = '/reviews'
     # def form_valid(self, form):
     #     self.object = form.save(commit=False)
-    #     self.object.user = self.request.user
+    #     self.object.location = self.request.location
     #     self.object.save()
     #     return HttpResponseRedirect('/travel_locations')
 
