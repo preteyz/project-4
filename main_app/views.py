@@ -1,4 +1,5 @@
 from nis import cat
+from os import environ
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -10,6 +11,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+# Import for OR filter
+from django.db.models import Q
+
 from main_app.models import TravelLocation, User, Review
 
 # Create your views here.
@@ -20,14 +24,18 @@ class Travel_Locations(TemplateView):
     template_name = 'travel_locations.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        name = self.request.GET.get("name")
-        if name != None:
-            context["TravelLocations"] = TravelLocation.objects.filter(name__icontains=name)
-            context["header"] = f"Searching for {name}"
+        query = self.request.GET.get("query")
+        environment = self.request.GET.get("environment_search")
+        if query != None:
+            context["locations"] = TravelLocation.objects.filter(Q(name = query) | Q(environment = query))
+            context["header"] = f"Searching for {query}"
         else: 
-            context['TravelLocations'] = TravelLocation.objects.all() # this is where we add the key into our context object for the view to use
-            context['header'] = "Our Travel Locations!"
+            context['header'] = "Our travel locations"
+            context["locations"] = TravelLocation.objects.all()
+        if environment != None:
+            context["locations"] = TravelLocation.objects.filter(environment_icontains=environment)
         return context
+        
 
 class Location_Detail(DetailView):
     model = TravelLocation

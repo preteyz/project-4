@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 
 
 ENVIRONMENT_CHOICES = (
-    ("b", "beach"),
-    ("m", "mountain"),
-    ("c", "city"),
-    ("r", "rural")
+    ("beach", "beach"),
+    ("mountain", "mountain"),
+    ("city", "city"),
+    ("rural", "rural")
 )
 
 # favorites = models.ManyToManyField(Review)

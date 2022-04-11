@@ -6,17 +6,9 @@ Browse
 
 {% block content %}
 
-<form>
-    <div>
-        <input type="text" name="name" placeholder="name"/>
-        <input type="submit" value="Search"/>
-    </div>
-    <a href="{% url 'location_create' %}">Add Location</a>
-    <a href="{% url 'travel_locations' %}">Clear Search</a>
-</form>
 
 <h1>{{header}}</h1>
-    {% for location in TravelLocations %}
+    {% for location in locations %}
     <img src="{{location.img}}" alt="{{location.name}}">
         <a href="{% url 'location_detail' location.pk %}">
             <h3>Name: {{location.name}}</h3>
