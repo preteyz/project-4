@@ -6,22 +6,21 @@ Browse
 
 {% block content %}
 
-<form>
-    <div>
-        <input type="text" name="name" placeholder="name"/>
-        <input type="submit" value="Search"/>
-    </div>
-    <a href="{% url 'location_create' %}">Add Location</a>
-    <a href="{% url 'travel_locations' %}">Clear Search</a>
-</form>
 
 <h1>{{header}}</h1>
-    {% for location in TravelLocations %}
-    <img src="{{location.img}}" alt="{{location.name}}">
-        <a href="{% url 'location_detail' location.pk %}">
-            <h3>Name: {{location.name}}</h3>
-        </a>
-            <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a>
-        </p>
+    {% for location in locations %}
+    <div class="card">
+        <div class="card" style="width: 100%;">
+            <img class="card-img-top" src="{{location.img}}" alt="{{location.name}}">
+            <div class="card-body">
+            <h5 class="card-title">{{location.name}}</h5>
+            <small>Shared by: <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a></small>
+            <br /><br />
+            <p class="card-text">{{location.description}}</p>
+            <a href="{% url 'location_detail' location.pk %}" class="btn btn-primary">Details</a>
+            </div>
+        </div>
+    </div>
+    
     {% endfor %}
 {% endblock %}

@@ -6,10 +6,10 @@ from django.contrib.auth.models import User
 
 
 ENVIRONMENT_CHOICES = (
-    ("b", "beach"),
-    ("m", "mountain"),
-    ("c", "city"),
-    ("r", "rural")
+    ("beach", "beach"),
+    ("mountain", "mountain"),
+    ("city", "city"),
+    ("rural", "rural")
 )
 
 
@@ -18,6 +18,7 @@ class TravelLocation(models.Model):
     name = models.CharField(max_length=50)
     img = models.CharField(max_length=250)
     environment = models.CharField(max_length=10, choices = ENVIRONMENT_CHOICES)
+    description = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     favorites = models.ManyToManyField(User, related_name='location_post')
     
