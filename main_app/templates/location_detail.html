@@ -5,45 +5,106 @@
     <img src="{{object.img}}" alt="picture of {{object.name}}"/>
 </div> {% endcomment %}
 <div>
-    <h3>Name: {{ object.name }}</h3>
-    <p>Created by:
-        <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
-    </p> 
-  
+    <div class="card">
+        <img src="{{object.img}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            {% comment %} Total likes to be displayed next to location name but models not migrating {% endcomment %}
+            <h5 class="card-title">
+                {{object.name}}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <p>{{object.favorite|length}} people favorited this location!</p>
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul>
+                                {% for user in favorites %}
+                                <li class="list-group-item">
+                                    <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a>
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item">
+                                    <div> This location has no favorites...</div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </h5>
+            <form action="{% url 'favorite_location' object.pk %}" method="POST">
+                {% csrf_token %}
+                
+                {% if user.is_authenticated %}
+                    {% if faved %}
+                    <div>
+                        <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-danger btn-sm">Unfav</button>
+                        <a class="btn btn-light btn-sm" href="{% url 'location_update' object.pk %}">Update</a>
+                        <a class="btn btn-dark btn-sm" href="{% url 'location_delete' object.pk %}">Delete</a>
+                    </div>
+                        
+                    {% else %}
+                    <div>
+                        <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Fav</button>
+                        <a class="btn btn-light btn-sm" href="{% url 'location_update' object.pk %}">Update</a>
+                        <a class="btn btn-dark btn-sm" href="{% url 'location_delete' object.pk %}">Delete</a>
+                    </div>
+                    {% endif %}
+                {% else %}
+                <small> - Must be logged in to favorite
+                     </small>
+                {% endif %}
+                
+            </form>
+            
+            <p class="card-text">{{object.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <small>Shared by: {{object.user.username}}<br>at {{object.created_at}} </small>
+            </li>
+
+            <li class="list-group-item">
+                <h3>Reviews:<a href="{% url 'review_create' location.pk %}" class="btn btn-light" role="button">+</a></h3>
+            </li>
+            {% for review in reviews %}
+                {% if review.travel_location.id == object.id %}
+                <li class="list-group-item">
+                    <div><h5>{{ review.user.username }}:</h5></div>
+                    <div><p>{{ review.created_at }}</p></div>
+                    <div>{{ review.name }}</div>
+                    <div>{{ review.body }}</div>
+                </li>
+                
+                {% endif %}
+                
+                {% empty %}
+                <li class="list-group-item">
+                    <div> This location has no reviews...</div>
+                </li>
+            {% endfor %}
+            
+        </ul>
+    </div>
+    
     <br/><br/>
-    <form action="{% url 'favorite_location' object.pk %}" method="POST">
-        {% csrf_token %}
-        
-        {% if user.is_authenticated %}
-            {% if faved %}
-                <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-danger btn-sm">Unfav</button>
-            {% else %}
-            <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Fav</button>
-            {% endif %}
-        {% else %}
-        <small> - Must be logged in to favorite </small>
-        {% endif %}
-    </form>
-    <br/>
-
-    <h3>Reviews:</h3>
-    {% for review in reviews.all %}
-        {% if review.travel_location.id == object.id %}
-        <div>{{ review.user.username }}</div>
-        <div>{{ review.created_at }}</div>
-        <div>{{ review.name }}</div>
-        <div>{{ review.body }}</div>
-        {% endif %}
-        
-        {% empty %}
-        <div> This location has no reviews...</div>
-    {% endfor %}
+    
 
 </div>
 
-<div>
-    <a href="{% url 'location_update' object.pk %}">Update</a>
-    <a href="{% url 'location_delete' object.pk %}">Delete</a>
-</div>
+
 
 {% endblock %}
