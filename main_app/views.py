@@ -1,4 +1,5 @@
 from nis import cat
+from django.shortcuts import render, get_object_or_404
 from os import environ
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
@@ -10,11 +11,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.urls import reverse
 
 # Import for OR filter
 from django.db.models import Q
 
 from main_app.models import TravelLocation, User, Review
+
+def Favorite_View(request, pk):
+    location = get_object_or_404(TravelLocation, id=request.POST.get('location_id'))
+    favorited = False
+    if location.favorites.filter(id=request.user.id).exists():
+        location.favorites.remove(request.user)
+        favorited = False
+    else:
+        location.favorites.add(request.user)
+        favorited = True
+    return HttpResponseRedirect(reverse('location_detail', args=[str(pk)]))
 
 # Create your views here.
 class Home(TemplateView):
@@ -42,14 +55,27 @@ class Travel_Locations(TemplateView):
 class Location_Detail(DetailView):
     model = TravelLocation
     template_name = "location_detail.html"
-    # def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        location = get_object_or_404(TravelLocation, id=self.kwargs['pk'])
+        faved = False
+        if location.favorites.filter(id=self.request.user.id).exists():
+            faved = True
 
+        total_favs = location.total_likes()
+        context['location'] = location
+        context['faved'] = faved
+        context['total_favs'] = total_favs
+        context['reviews'] = Review.objects.all()
 
-    
+        # context['reviews'] = Review.objects.filter(location__icontains=name)
+        return context
+
 
 @method_decorator(login_required, name='dispatch')
 class Location_Create(CreateView):
     model = TravelLocation
+#     fields = ['user', 'name', 'img', 'environment', 'favorites']
     fields = ['name', 'img', 'environment', 'description']
     template_name = "location_create.html"
     def form_valid(self, form):
@@ -142,7 +168,7 @@ class Review_Create(CreateView):
 @method_decorator(login_required, name='dispatch')
 class Review_Update(UpdateView):
     model = Review
-    fields = ['name', 'color']
+    fields = ['rating', 'body']
     template_name = "reviews_update.html"
     success_url = '/reviews'
 

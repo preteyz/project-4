@@ -9,20 +9,36 @@
     <p>Created by:
         <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
     </p> 
-    <div>
-        <img src="{{object.img}}" alt="{{object.name}}">
-        <div>{{object.description}}</div>
-    </div>
+  
+    <br/><br/>
+    <form action="{% url 'favorite_location' object.pk %}" method="POST">
+        {% csrf_token %}
+        
+        {% if user.is_authenticated %}
+            {% if faved %}
+                <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-danger btn-sm">Unfav</button>
+            {% else %}
+            <button type="submit", name="location_id", value="{{ object.id }}", class="btn btn-primary btn-sm">Fav</button>
+            {% endif %}
+        {% else %}
+        <small> - Must be logged in to favorite </small>
+        {% endif %}
+    </form>
+    <br/>
+
     <h3>Reviews:</h3>
-    {% comment %} <a href="{% url 'reviews_form' object.pk %}">Add review</a> {% endcomment %}
-    {% for review in object.reviews.all %}
-        <div>{{ review.user }}</div>
+    {% for review in reviews.all %}
+        {% if review.travel_location.id == object.id %}
+        <div>{{ review.user.username }}</div>
         <div>{{ review.created_at }}</div>
         <div>{{ review.name }}</div>
         <div>{{ review.body }}</div>
-    {% empty %}
+        {% endif %}
+        
+        {% empty %}
         <div> This location has no reviews...</div>
     {% endfor %}
+
 </div>
 
 <div>
