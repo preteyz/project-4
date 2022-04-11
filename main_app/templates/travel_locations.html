@@ -13,7 +13,6 @@ Browse
         <a href="{% url 'location_detail' location.pk %}">
             <h3>Name: {{location.name}}</h3>
         </a>
-            <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a>
-        </p>
+        <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a>
     {% endfor %}
 {% endblock %}

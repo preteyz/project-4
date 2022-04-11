@@ -9,8 +9,12 @@
     <p>Created by:
         <a href="/user/{{ object.user.username }}">{{ object.user.username }}</a>
     </p> 
- 
+    <div>
+        <img src="{{object.img}}" alt="{{object.name}}">
+        <div>{{object.description}}</div>
+    </div>
     <h3>Reviews:</h3>
+    {% comment %} <a href="{% url 'reviews_form' object.pk %}">Add review</a> {% endcomment %}
     {% for review in object.reviews.all %}
         <div>{{ review.user }}</div>
         <div>{{ review.created_at }}</div>

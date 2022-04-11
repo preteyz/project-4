@@ -18,6 +18,7 @@ class TravelLocation(models.Model):
     name = models.CharField(max_length=50)
     img = models.CharField(max_length=250)
     environment = models.CharField(max_length=10, choices = ENVIRONMENT_CHOICES)
+    description = models.CharField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

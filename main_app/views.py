@@ -29,23 +29,28 @@ class Travel_Locations(TemplateView):
         if query != None:
             context["locations"] = TravelLocation.objects.filter(Q(name = query) | Q(environment = query))
             context["header"] = f"Searching for {query}"
+            context["environments"] =TravelLocation.objects.values_list('environment', flat=True).distinct()
         else: 
             context['header'] = "Our travel locations"
-            context["locations"] = TravelLocation.objects.all()
+            context["locations"] = TravelLocation.objects.filter(environment__icontains=environment)
+            context["environments"] =TravelLocation.objects.values_list('environment', flat=True).distinct()
         if environment != None:
-            context["locations"] = TravelLocation.objects.filter(environment_icontains=environment)
+            context["files"] = TravelLocation.objects.filter(environment__icontains=environment)
         return context
         
 
 class Location_Detail(DetailView):
     model = TravelLocation
     template_name = "location_detail.html"
+    # def get_context_data(self, **kwargs):
+
+
     
 
 @method_decorator(login_required, name='dispatch')
 class Location_Create(CreateView):
     model = TravelLocation
-    fields = ['user', 'name', 'img', 'environment']
+    fields = ['name', 'img', 'environment', 'description']
     template_name = "location_create.html"
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -56,7 +61,7 @@ class Location_Create(CreateView):
 @method_decorator(login_required, name='dispatch')
 class Location_Update(UpdateView):
     model = TravelLocation
-    fields = ['user', 'name', 'img', 'environment']
+    fields = ['name', 'img', 'environment', 'description']
     template_name = "location_update.html"
     def get_success_url(self):
         return reverse('location_detail', kwargs={'pk': self.object.pk})
@@ -128,6 +133,11 @@ class Review_Create(CreateView):
     fields = '__all__'
     template_name = "reviews_form.html"
     success_url = '/reviews'
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     self.object.user = self.request.user
+    #     self.object.save()
+    #     return HttpResponseRedirect('/travel_locations')
 
 @method_decorator(login_required, name='dispatch')
 class Review_Update(UpdateView):

@@ -35,11 +35,11 @@
                         
                         {% if user.is_authenticated %}
 
-                        <li class="nav-item" style="margin-left: 45px">
+                        <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
 
-                        <li class="nav-item" style="margin-left: 45px">
+                        <li class="nav-item">
                             <a href="/travel_locations"
                                class="nav-link">
                                Travel Locations
@@ -47,7 +47,7 @@
                         </li>
 
 
-                        <li class="nav-item" style="margin-left: 100px">
+                        <li class="nav-item" style="margin-left: 200px">
                             <form class="d-flex">
                                 <input class="form-control me-2"
                                        type="query"
@@ -58,33 +58,19 @@
                             </form>
                         </li>
 
-                        <form>
-                            <select name="environment_search" style="min-height: 30px; border:none">
-                               <option value="empty">Environment</option>
-                            {% for location in locations %}
-                            {% if location %}
-                            <option value="{{location.environment}}">{{location.environment}}</option>
-                            {% else %}
-                            <p>NO SEASON AVAILABLE</p>
-                            {% endif %}
-                            {% empty %}
-                            <p>NO SEASON AVAILABLE</p>
-                            {% endfor %}
-                            <input type="submit"  value="FILTER" style="color:white; background:#6E757D; border-radius: 5px; border: 1px solid #cccccc; min-height: 30px;"></input>
-                            </select>    
-                        </form>
+                        <li class="nav-item" style="margin-left: 30px">
+                            <form class="d-flex">
+                                <select name="environment_search" style="min-height: 30px; border:none">
+                                <option value="empty">Environment</option>
+                                {% for environment in environments %}
+                                <option value="{{environment}}">{{environment}}</option>
+                                {% endfor %}
+                                <input type="submit"  value="FILTER" style="color:white; background:#6E757D; border-radius: 5px; border: 1px solid #cccccc; min-height: 30px;"></input>
+                                </select>    
+                            </form>
+                        </li>
 
-                        {% comment %} <form>
-                            <div>
-                                <input type="text" name="name" placeholder="name"/>
-                                <input type="submit" value="Search"/>
-                            </div>
-                            <a href="{% url 'location_create' %}">Add Location</a>
-                            <a href="{% url 'travel_locations' %}">Clear Search</a>
-                        </form> {% endcomment %}
-
-
-                        <li class="nav-item" style="margin-left: 300px">
+                        <li class="nav-item" style="margin-left: 170px">
                             <a href="{% url 'logout' %}"
                                class="nav-link">
                                Logout
@@ -92,7 +78,7 @@
                         </li>
 
                         
-                        <li class="nav-item" style="margin-left: 45px">
+                        <li class="nav-item" >
                             <a href="{% url 'profile' user.username %}"
                                class="nav-link">
                                Hello, {{ user.username }}!
