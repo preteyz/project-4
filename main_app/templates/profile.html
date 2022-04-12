@@ -5,11 +5,31 @@
 
     <h1>{{ username }}'s Collection</h1>
 
-    {% for location in locations %}
-        <a href="/travel_locations/{{ location.id }}">
-            <h3>{{ location.name }}</h3>
-        </a>
+    <div class="row row-cols-1 row-cols-md-2">
+        {% for location in locations %}
+        <div class="col mb-4">
+            <div class="card">
+                <div class="card">
+                    <img class="card-img-top" src="{{location.img}}" alt="{{location.name}}">
+                    <div class="card-body">
+                    <h5 class="card-title">{{location.name}}</h5>
+                    <small>Shared by: <a href="/user/{{ location.user.username }}">{{ location.user.username }}</a></small>
+                    <br /><br />
+                    <p class="card-text">{{location.description}}</p>
+                    <a href="{% url 'location_detail' location.pk %}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
 
-    {% endfor %}
+      
+    {% comment %} 
+        {% for location in locations %}
+            <a href="/travel_locations/{{ location.id }}">
+                <h3>{{ location.name }}</h3>
+            </a>
+
+        {% endfor %} {% endcomment %}
 
 {% endblock %}

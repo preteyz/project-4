@@ -5,5 +5,32 @@ DjangoVentures Home
 {% endblock %}
 
 {% block content %}
-<h1>Home Page</h1>
+
+<div class="container-md">
+    <h3>Venture </h3>
+    <hr>
+
+    <h3> Welcome to Venture!</h3>
+    <P> A website that conatins collection of the most popular vacation spots on the browse page. 
+        If your favorite location doesn't exist, it can be added directly from the browse page by a logged-in user. 
+        Each travel location includes an environment type so people can filter travel locations by what environment they prefer during their vacation (beach, mountains, parks, cities). 
+        <br/><br/>
+        If you already know the location you wish to read reviews for, the search bar can be used to filter by both environment type and location name.
+        Users can write reviews and leave ratings which will influence which location is displayed first. 
+        Users can also favorite locations to be displayed on their profile page.</P>
+        <br/>
+    <h3></h3>
+
+
+    {% if user.is_authenticated %}
+    <div class="text-center">
+        <a class="btn btn-primary btn-lg rounded-pill" href="/travel_locations" role="button">Explore</a>
+    </div>
+    {% else %}
+    <div class="text-center">
+        <a class="btn btn-secondary btn-lg rounded-pill" href="/login" role="button" disabled>Please Login</a>
+    </div>
+    {% endif %}
+
+    </P>
 {% endblock %}

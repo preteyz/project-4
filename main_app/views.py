@@ -23,7 +23,7 @@ def Favorite_View(request, pk):
     favorited = False
     if location.favorites.filter(id=request.user.id).exists():
         location.favorites.remove(request.user)
-        
+
         favorited = False
     else:
         location.favorites.add(request.user)
@@ -69,7 +69,7 @@ class Location_Detail(DetailView):
         context['favorites'] = TravelLocation.objects.values_list('favorites', flat=True).distinct()
         # context['total_favs'] = total_favs
         context['reviews'] = Review.objects.all()
-        # context['reviews'] = Review.objects.filter(location__icontains=name)
+        # context['reviews'] = Review.objects.filter(travel_location__icontains=location)
         return context
 
 
@@ -157,13 +157,14 @@ def reviews_index(request):
 @method_decorator(login_required, name='dispatch')
 class Review_Create(CreateView):
     model = Review
-    fields = fields = ['travel_location', 'rating', 'body']
+    fields = fields = ['travel_location','rating', 'body']
     template_name = "reviews_form.html"
     # success_url = '/reviews'
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.location = self.request.user
-    #     self.object.save()
+        self.object.user = self.request.user
+        # self.object.travel_location = 
+        self.object.save()
         return HttpResponseRedirect('/travel_locations')
 
 @method_decorator(login_required, name='dispatch')
