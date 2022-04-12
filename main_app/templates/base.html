@@ -31,7 +31,6 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         
                         {% if user.is_authenticated %}
-
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
@@ -44,7 +43,7 @@
                         </li>
 
 
-                        <li class="nav-item" style="margin-left: 200px">
+                        <li class="nav-item" {% if request.path != '/travel_locations/' %} style="display: none;" {% else %} style="margin-left: 200px" {% endif %}>
                             <form class="d-flex">
                                 <input class="form-control me-2"
                                        type="query"
@@ -55,7 +54,7 @@
                             </form>
                         </li>
 
-                        <li class="nav-item" style="margin-left: 30px">
+                        <li class="nav-item" {% if request.path != '/travel_locations/' %} style="display: none;" {% else %} style="margin-left: 30px" {% endif %}>
                             <form class="d-flex">
                                 <select name="environment_search" style="min-height: 30px; border:none">
                                 <option value="empty">Environment</option>
@@ -67,7 +66,7 @@
                             </form>
                         </li>
 
-                        <li class="nav-item" style="margin-left: 170px">
+                        <li class="nav-item" {% if request.path != '/travel_locations/' %} style="margin-left: 859px" {% else %} style="margin-left: 170px" {% endif %}>
                             <a href="{% url 'logout' %}"
                                class="nav-link">
                                Logout
