@@ -54,7 +54,8 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # DEBUG = True
 
 ALLOWED_HOSTS = [
-    # 'djangoventure.herokuapp.com'
+    # *** FOR DEPLOYMENT ***
+    'djangoventure.herokuapp.com'
 ]
 
 
