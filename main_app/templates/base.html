@@ -57,7 +57,7 @@
                         <li class="nav-item" {% if request.path != '/travel_locations/' %} style="display: none;" {% else %} style="margin-left: 30px" {% endif %}>
                             <form class="d-flex">
                                 <select name="environment_search" style="min-height: 30px; border:none">
-                                <option value="empty">Environment</option>
+                                <option value="empty">Environments</option>
                                 {% for environment in environments %}
                                 <option value="{{environment}}">{{environment}}</option>
                                 {% endfor %}
